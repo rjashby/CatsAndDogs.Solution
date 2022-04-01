@@ -15,22 +15,22 @@ namespace AnimalShelter.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class ReviewsController : ControllerBase
+  public class DogsController : ControllerBase
   {
     private readonly AnimalShelterContext _db;
     private readonly IUriService uriService; 
 
-    public ReviewsController(AnimalShelterContext db, IUriService uriService)
+    public DogsController(AnimalShelterContext db, IUriService uriService)
     {
       this.uriService = uriService;
       _db = db;
     }
 
-    //GET: api/Reviews
+    //GET: api/Dogs
     // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<Review>>> Get(int destinationId, double rating)
+    // public async Task<ActionResult<IEnumerable<Dog>>> Get(int destinationId, double rating)
     // {
-    //   var query = _db.Reviews.AsQueryable();
+    //   var query = _db.Dogs.AsQueryable();
 
     //   if (rating > 0)
     //   {
@@ -44,72 +44,72 @@ namespace AnimalShelter.Controllers
     {
       var route = Request.Path.Value;
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-      var pagedData = await _db.Reviews
+      var pagedData = await _db.Dogs
         .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
         .Take(validFilter.PageSize)
         .ToListAsync();
-      var totalRecords = await _db.Reviews.CountAsync();
-      var pagedResponse = PaginationHelper.CreatePagedResponse<Review>(pagedData, validFilter, totalRecords, uriService, route);
+      var totalRecords = await _db.Dogs.CountAsync();
+      var pagedResponse = PaginationHelper.CreatePagedResponse<Dog>(pagedData, validFilter, totalRecords, uriService, route);
       return Ok(pagedResponse);
     }
 
-     //GET: api/Reviews/Popular
+     //GET: api/Dogs/Popular
     [HttpGet]
     [Route("Popular")]
-    public async Task<ActionResult<IEnumerable<Destination>>> Popular()
+    public async Task<ActionResult<IEnumerable<Dog>>> Popular()
     {
-      var query = _db.Destinations.AsQueryable();
+      var query = _db.Dogs.AsQueryable();
 
-      var all = _db.Reviews.GroupBy(x => x.DestinationId)
-        .Select(group => new {DestinationId = group.Key, Count = group.Count()})
+      var all = _db.Dogs.GroupBy(x => x.DogId)
+        .Select(group => new {DogId = group.Key, Count = group.Count()})
         .OrderByDescending(x => x.Count);
 
       var item = all.First();
-      int mostfrequent = item.DestinationId;
+      int mostfrequent = item.DogId;
       var mostfrequentcount = item.Count;
 
-      query = query.Where(entry => entry.DestinationId == mostfrequent);
+      query = query.Where(entry => entry.DogId == mostfrequent);
       return await query.ToListAsync();
     }
 
-    // GET: api/Reviews/5
+    // GET: api/Dogs/5
     // [HttpGet("{id}")]
-    // public async Task<ActionResult<Review>> GetReview(int id, int destinationId, double rating)
+    // public async Task<ActionResult<Dog>> GetDog(int id, int destinationId, double rating)
     // {
         
-    //     var review = await _db.Reviews.FindAsync(id);
+    //     var dog = await _db.Dogs.FindAsync(id);
 
     //     if (destinationId == 0)
     //     {
           
     //     }
 
-    //     if (review == null)
+    //     if (dog == null)
     //     {
     //         return NotFound();
     //     }
-    //     return review;
+    //     return dog;
     // }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-      var review = await _db.Reviews.Where(a => a.ReviewId == id).FirstOrDefaultAsync();
-      return Ok(new Response<Review>(review));
+      var dog = await _db.Dogs.Where(a => a.DogId == id).FirstOrDefaultAsync();
+      return Ok(new Response<Dog>(dog));
     }
 
 
-    // PUT: api/Reviews/5
+    // PUT: api/Dogs/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Review review)
+    public async Task<IActionResult> Put(int id, Dog dog)
     {
-      if (id != review.ReviewId)
+      if (id != dog.DogId)
       {
         return BadRequest();
       }
 
-      _db.Entry(review).State = EntityState.Modified;
+      _db.Entry(dog).State = EntityState.Modified;
 
       try
       {
@@ -117,7 +117,7 @@ namespace AnimalShelter.Controllers
       }
       catch (DbUpdateConcurrencyException)
       {
-        if (!ReviewExists(id))
+        if (!DogExists(id))
         {
           return NotFound();
         }
@@ -130,35 +130,35 @@ namespace AnimalShelter.Controllers
       return NoContent();
     }
 
-    // POST: api/Reviews
+    // POST: api/Dogs
     [HttpPost]
-    public async Task<ActionResult<Review>> Post(Review review)
+    public async Task<ActionResult<Dog>> Post(Dog dog)
     {
-      _db.Reviews.Add(review);
+      _db.Dogs.Add(dog);
       await _db.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(GetById), new { id = review.ReviewId }, review);
+      return CreatedAtAction(nameof(GetById), new { id = dog.DogId }, dog);
     }
 
-    // DELETE: api/Reviews/5
+    // DELETE: api/Dogs/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteReview(int id)
+    public async Task<IActionResult> DeleteDog(int id)
     {
-      var review = await _db.Reviews.FindAsync(id);
-      if (review == null)
+      var dog = await _db.Dogs.FindAsync(id);
+      if (dog == null)
       {
         return NotFound();
       }
 
-      _db.Reviews.Remove(review);
+      _db.Dogs.Remove(dog);
       await _db.SaveChangesAsync();
 
       return NoContent();
     }
 
-    private bool ReviewExists(int id)
+    private bool DogExists(int id)
     {
-      return _db.Reviews.Any(e => e.ReviewId == id);
+      return _db.Dogs.Any(e => e.DogId == id);
     }
   }
 }
