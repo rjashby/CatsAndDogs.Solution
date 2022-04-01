@@ -164,4 +164,32 @@ namespace AnimalShelter.Controllers
       return _db.Cats.Any(e => e.CatId == id);
     }
   }
+  
+  [ApiVersion("2.0")]
+  [Route("api/{v:apiVersion}/[controller]")]
+  [ApiController]
+  public class CatsV2Controller : ControllerBase
+  {
+      private readonly AnimalShelterContext _db;
+
+    public CatsV2Controller(AnimalShelterContext db)
+    {
+      _db = db;
+    }
+    //GET: api/Cats/Random
+    [HttpGet]
+    [Route("Random")]
+    public async Task<ActionResult<IEnumerable<Cat>>> Random()
+    {
+      var query = _db.Cats.AsQueryable();
+      Random random = new Random();
+      int r = 0;
+      while (!query.Any(d => d.CatId == r))
+      {
+        r = random.Next(1, (query.Count() + 1));
+      }
+      query = query.Where(entry => entry.CatId == r);
+      return await query.ToListAsync();
+    }
+  }
 }

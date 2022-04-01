@@ -40,7 +40,7 @@ namespace AnimalShelter.Controllers
       return Ok(pagedResponse);
     }
 
-    // GET: api/Cats/Query?
+    // GET: api/Dogs/Query?
     [HttpGet]
     [Route("Query")]
     public async Task<ActionResult<IEnumerable<Dog>>> Get(string species, string gender, string name, int age, int minimumAge)
@@ -161,6 +161,34 @@ namespace AnimalShelter.Controllers
     private bool DogExists(int id)
     {
       return _db.Dogs.Any(e => e.DogId == id);
+    }
+  }
+
+  [ApiVersion("2.0")]
+  [Route("api/{v:apiVersion}/[controller]")]
+  [ApiController]
+  public class DogsV2Controller : ControllerBase
+  {
+    private readonly AnimalShelterContext _db;
+
+    public DogsV2Controller(AnimalShelterContext db)
+    {
+      _db = db;
+    }
+    //GET: api/Dogs/Random
+    [HttpGet]
+    [Route("Random")]
+    public async Task<ActionResult<IEnumerable<Dog>>> Random()
+    {
+      var query = _db.Dogs.AsQueryable();
+      Random random = new Random();
+      int r = 0;
+      while (!query.Any(d => d.DogId == r))
+      {
+        r = random.Next(1, (query.Count() + 1));
+      }
+      query = query.Where(entry => entry.DogId == r);
+      return await query.ToListAsync();
     }
   }
 }
