@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using AnimalShelter.Models;
-// using AnimalShelter.Services;
+using AnimalShelter.Services;
 using System.Reflection;
 using System.IO;
 
@@ -32,13 +32,13 @@ namespace AnimalShelter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ///versioning test
+            ///Versioning
             services.AddApiVersioning(o => {
                 o.ReportApiVersions = true;
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
             });
-            ////end of versioning test
+            ////End of Versioning
             
             services.AddDbContext<AnimalShelterContext>(opt =>
                 opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
@@ -98,4 +98,4 @@ namespace AnimalShelter
             });
         }
     }
-}
+} 

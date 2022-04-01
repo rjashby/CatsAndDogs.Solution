@@ -11,16 +11,26 @@ namespace AnimalShelter.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-          builder.Entity<Animal>()
+          builder.Entity<Cat>()
               .HasData(
-                  new Animal { AnimalId = 1, Name = "Matilda", Species = "Cat", Age = 7, Gender = "Female" },
-                  new Animal { AnimalId = 2, Name = "Rexie", Species = "Cat", Age = 10, Gender = "Female" },
-                  new Animal { AnimalId = 3, Name = "Matilda", Species = "Dog", Age = 2, Gender = "Female" },
-                  new Animal { AnimalId = 4, Name = "Pip", Species = "Dog", Age = 4, Gender = "Male" },
-                  new Animal { AnimalId = 5, Name = "Bartholomew", Species = "Dog", Age = 22, Gender = "Male" }
+                  new Cat { CatId = 1, Name = "One", Species = "Cat", Age = 1000, Gender = "Lady" },
+                  new Cat { CatId = 2, Name = "Two", Species = "Cat", Age = 10000, Gender = "Lady" },
+                  new Cat { CatId = 3, Name = "Three", Species = "Cat", Age = 100000, Gender = "Lady" },
+                  new Cat { CatId = 4, Name = "Four", Species = "Cat", Age = 1000000, Gender = "Lady" },
+                  new Cat { CatId = 5, Name = "Five", Species = "Cat", Age = 1, Gender = "Lady" }
+              );
+
+          builder.Entity<Dog>()
+              .HasData(
+                  new Dog { DogId = 1, Name = "Good", Species = "Dog", Age = 2, Gender = "Dude" },
+                  new Dog { DogId = 2, Name = "Bad", Species = "Dog", Age = 2, Gender = "Dude" },
+                  new Dog { DogId = 3, Name = "Happy", Species = "Dog", Age = 2, Gender = "Dude" },
+                  new Dog { DogId = 4, Name = "Sad", Species = "Dog", Age = 2, Gender = "Dude" },
+                  new Dog { DogId = 5, Name = "Indifferent", Species = "Dog", Age = 2, Gender = "Dude" }
               );
         }
 
-        public DbSet<Animal> Animals { get; set; }
+        public DbSet<Cat> Cats { get; set; }
+        public DbSet<Dog> Dogs { get; set; }
     }
 }
