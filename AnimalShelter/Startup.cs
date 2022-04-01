@@ -66,8 +66,8 @@ namespace AnimalShelter
                 Description = "A simple example ASP.NET Core Web API",
                 Contact = new OpenApiContact
                 {
-                  Name = "Bill Braski",
-                  Email = "BillBill@gmail.com"
+                  Name = "Willow Ufgood",
+                  Email = "WillowUfgood@Madmartigan.com"
                 }
               });
             });
