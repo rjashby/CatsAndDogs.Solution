@@ -75,25 +75,6 @@ namespace AnimalShelter.Controllers
       return await query.ToListAsync();
     }
 
-     //GET: api/Dogs/Popular
-    [HttpGet]
-    [Route("Popular")]
-    public async Task<ActionResult<IEnumerable<Dog>>> Popular()
-    {
-      var query = _db.Dogs.AsQueryable();
-
-      var all = _db.Dogs.GroupBy(x => x.DogId)
-        .Select(group => new {DogId = group.Key, Count = group.Count()})
-        .OrderByDescending(x => x.Count);
-
-      var item = all.First();
-      int mostfrequent = item.DogId;
-      var mostfrequentcount = item.Count;
-
-      query = query.Where(entry => entry.DogId == mostfrequent);
-      return await query.ToListAsync();
-    }
-
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -167,11 +148,11 @@ namespace AnimalShelter.Controllers
   [ApiVersion("2.0")]
   [Route("api/{v:apiVersion}/[controller]")]
   [ApiController]
-  public class DogsV2Controller : ControllerBase
+  public class Dogs2Controller : ControllerBase
   {
     private readonly AnimalShelterContext _db;
 
-    public DogsV2Controller(AnimalShelterContext db)
+    public Dogs2Controller(AnimalShelterContext db)
     {
       _db = db;
     }
