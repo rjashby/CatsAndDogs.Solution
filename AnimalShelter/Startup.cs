@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using AnimalShelter.Models;
+// using AnimalShelter.Services;
+using System.Reflection;
+using System.IO;
 
-namespace AnimalShelter.Solution
+namespace AnimalShelter
 {
     public class Startup
     {
@@ -26,12 +32,46 @@ namespace AnimalShelter.Solution
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            ///versioning test
+            services.AddApiVersioning(o => {
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+            ////end of versioning test
+            
+            services.AddDbContext<AnimalShelterContext>(opt =>
+                opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
             services.AddControllers();
+
+
+            // Add Pagination
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriService>(o =>
+            {
+              var accessor = o.GetRequiredService<IHttpContextAccessor>();
+              var request = accessor.HttpContext.Request;
+              var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+              return new UriService(uri);
+            });
+            // Finish Pagination
+
+            // Add Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnimalShelter.Solution", Version = "v1" });
+              c.SwaggerDoc("v1", new OpenApiInfo
+              {
+                Title = "AnimalShelter",
+                Version = "v1",
+                Description = "A simple example ASP.NET Core Web API",
+                Contact = new OpenApiContact
+                {
+                  Name = "Bill Braski",
+                  Email = "BillBill@gmail.com"
+                }
+              });
             });
+            // End Swagger
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,11 +80,13 @@ namespace AnimalShelter.Solution
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // Swagger
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter.Solution v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
+                // Swagger
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
