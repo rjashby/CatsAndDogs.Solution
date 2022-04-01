@@ -135,7 +135,6 @@ DELETE: /api/Dogs/{id}
 Version 2.0 Additional Endpoint:
 ```
 GET w/ Random Cat: /2/api/Dogs/Random/
-
 ```
 
 2) Cats
@@ -156,10 +155,9 @@ DELETE: /api/Cats/{id}
 Version 2.0 Additional Endpoint:
 ```
 GET w/ Random Cat: /2/api/Cats/Random/
-
 ```
 
-### Example Queries
+### Example Query
 ```
 https://localhost:5000/api/dogs/5
 ```
