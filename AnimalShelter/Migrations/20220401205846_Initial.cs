@@ -45,9 +45,14 @@ namespace AnimalShelter.Solution.Migrations
                 values: new object[,]
                 {
                     { 1, 1000, "Lady", "One", "Cat" },
-                    { 2, 10000, "Lady", "Two", "Cat" },
-                    { 3, 100000, "Lady", "Three", "Cat" },
+                    { 9, 5, "Bacon", "Nine Wives", "Cat" },
+                    { 8, 4, "Hamburger", "Eight", "Cat" },
+                    { 7, 3, "Hotdog", "Seven", "Cat" },
+                    { 6, 2, "Dolphin", "Six", "Cat" },
+                    { 10, 6, "Salad", "Ten the Cat", "Cat" },
                     { 4, 1000000, "Lady", "Four", "Cat" },
+                    { 3, 100000, "Lady", "Three", "Cat" },
+                    { 2, 10000, "Lady", "Two", "Cat" },
                     { 5, 1, "Lady", "Five", "Cat" }
                 });
 
@@ -56,11 +61,16 @@ namespace AnimalShelter.Solution.Migrations
                 columns: new[] { "DogId", "Age", "Gender", "Name", "Species" },
                 values: new object[,]
                 {
+                    { 9, 5, "Not Dude", "Mary", "Dog" },
                     { 1, 2, "Dude", "Good", "Dog" },
-                    { 2, 2, "Dude", "Bad", "Dog" },
-                    { 3, 2, "Dude", "Happy", "Dog" },
-                    { 4, 2, "Dude", "Sad", "Dog" },
-                    { 5, 2, "Dude", "Indifferent", "Dog" }
+                    { 2, 12, "Dude", "Bad", "Dog" },
+                    { 3, 3, "Dude", "Happy", "Dog" },
+                    { 4, 5, "Dude", "Sad", "Dog" },
+                    { 5, 6, "Dude", "Indifferent", "Dog" },
+                    { 6, 1, "Not Dude", "Frank", "Dog" },
+                    { 7, 1, "Not Dude", "Peter", "Dog" },
+                    { 8, 2, "Not Dude", "Paul", "Dog" },
+                    { 10, 8, "Not Dude", "Quite Contrary", "Dog" }
                 });
         }
 

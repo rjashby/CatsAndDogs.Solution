@@ -26,19 +26,6 @@ namespace AnimalShelter.Controllers
       _db = db;
     }
 
-    //GET: api/Dogs
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<Dog>>> Get(int destinationId, double rating)
-    // {
-    //   var query = _db.Dogs.AsQueryable();
-
-    //   if (rating > 0)
-    //   {
-    //     query = query.Where(entry => entry.Rating >= rating);
-    //   }
-    //   return await query.ToListAsync();
-    // }
-
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
     {
@@ -51,6 +38,36 @@ namespace AnimalShelter.Controllers
       var totalRecords = await _db.Dogs.CountAsync();
       var pagedResponse = PaginationHelper.CreatePagedResponse<Dog>(pagedData, validFilter, totalRecords, uriService, route);
       return Ok(pagedResponse);
+    }
+
+    // GET: api/Cats/Query?
+    [HttpGet]
+    [Route("Query")]
+    public async Task<ActionResult<IEnumerable<Dog>>> Get(string species, string gender, string name, int age)
+    {
+      var query = _db.Dogs.AsQueryable();
+
+      if (species != null)
+      {
+        query = query.Where(entry => entry.Species == species);
+      }
+
+      if (gender != null)
+      {
+        query = query.Where(entry => entry.Gender == gender);
+      }    
+
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }    
+
+      if (age != 0)
+      {
+        query = query.Where(entry => entry.Age == age);
+      }  
+
+      return await query.ToListAsync();
     }
 
      //GET: api/Dogs/Popular
@@ -72,25 +89,6 @@ namespace AnimalShelter.Controllers
       return await query.ToListAsync();
     }
 
-    // GET: api/Dogs/5
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<Dog>> GetDog(int id, int destinationId, double rating)
-    // {
-        
-    //     var dog = await _db.Dogs.FindAsync(id);
-
-    //     if (destinationId == 0)
-    //     {
-          
-    //     }
-
-    //     if (dog == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //     return dog;
-    // }
-
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -100,7 +98,6 @@ namespace AnimalShelter.Controllers
 
 
     // PUT: api/Dogs/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Dog dog)
     {

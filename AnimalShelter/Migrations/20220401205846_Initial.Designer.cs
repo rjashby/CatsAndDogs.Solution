@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalShelter.Solution.Migrations
 {
     [DbContext(typeof(AnimalShelterContext))]
-    [Migration("20220401180729_Initial")]
+    [Migration("20220401205846_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,46 @@ namespace AnimalShelter.Solution.Migrations
                             Gender = "Lady",
                             Name = "Five",
                             Species = "Cat"
+                        },
+                        new
+                        {
+                            CatId = 6,
+                            Age = 2,
+                            Gender = "Dolphin",
+                            Name = "Six",
+                            Species = "Cat"
+                        },
+                        new
+                        {
+                            CatId = 7,
+                            Age = 3,
+                            Gender = "Hotdog",
+                            Name = "Seven",
+                            Species = "Cat"
+                        },
+                        new
+                        {
+                            CatId = 8,
+                            Age = 4,
+                            Gender = "Hamburger",
+                            Name = "Eight",
+                            Species = "Cat"
+                        },
+                        new
+                        {
+                            CatId = 9,
+                            Age = 5,
+                            Gender = "Bacon",
+                            Name = "Nine Wives",
+                            Species = "Cat"
+                        },
+                        new
+                        {
+                            CatId = 10,
+                            Age = 6,
+                            Gender = "Salad",
+                            Name = "Ten the Cat",
+                            Species = "Cat"
                         });
                 });
 
@@ -123,7 +163,7 @@ namespace AnimalShelter.Solution.Migrations
                         new
                         {
                             DogId = 2,
-                            Age = 2,
+                            Age = 12,
                             Gender = "Dude",
                             Name = "Bad",
                             Species = "Dog"
@@ -131,7 +171,7 @@ namespace AnimalShelter.Solution.Migrations
                         new
                         {
                             DogId = 3,
-                            Age = 2,
+                            Age = 3,
                             Gender = "Dude",
                             Name = "Happy",
                             Species = "Dog"
@@ -139,7 +179,7 @@ namespace AnimalShelter.Solution.Migrations
                         new
                         {
                             DogId = 4,
-                            Age = 2,
+                            Age = 5,
                             Gender = "Dude",
                             Name = "Sad",
                             Species = "Dog"
@@ -147,9 +187,49 @@ namespace AnimalShelter.Solution.Migrations
                         new
                         {
                             DogId = 5,
-                            Age = 2,
+                            Age = 6,
                             Gender = "Dude",
                             Name = "Indifferent",
+                            Species = "Dog"
+                        },
+                        new
+                        {
+                            DogId = 6,
+                            Age = 1,
+                            Gender = "Not Dude",
+                            Name = "Frank",
+                            Species = "Dog"
+                        },
+                        new
+                        {
+                            DogId = 7,
+                            Age = 1,
+                            Gender = "Not Dude",
+                            Name = "Peter",
+                            Species = "Dog"
+                        },
+                        new
+                        {
+                            DogId = 8,
+                            Age = 2,
+                            Gender = "Not Dude",
+                            Name = "Paul",
+                            Species = "Dog"
+                        },
+                        new
+                        {
+                            DogId = 9,
+                            Age = 5,
+                            Gender = "Not Dude",
+                            Name = "Mary",
+                            Species = "Dog"
+                        },
+                        new
+                        {
+                            DogId = 10,
+                            Age = 8,
+                            Gender = "Not Dude",
+                            Name = "Quite Contrary",
                             Species = "Dog"
                         });
                 });
